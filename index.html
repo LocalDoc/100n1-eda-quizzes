@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Банк квизов для подготовки</title>
+  <link rel="stylesheet" href="./assets/hub.css" />
+</head>
+<body>
+  <header class="hub-header">
+    <div class="hub-container">
+      <h1>Банк квизов для подготовки</h1>
+      <p>Выберите предмет для повторения теории, отработки практических расчётов и прохождения тренировочных квизов.</p>
+    </div>
+  </header>
+
+  <main class="hub-container">
+    <div class="controls">
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="Поиск предмета или темы..."
+        autocomplete="off"
+      />
+      <div id="tagBar" class="tag-bar"></div>
+    </div>
+
+    <section id="subjectGrid" class="subject-grid"></section>
+  </main>
+
+  <script src="./subjects.js"></script>
+  <script>
+    (function () {
+      const subjects = window.SUBJECTS || [];
+      const grid = document.getElementById("subjectGrid");
+      const searchInput = document.getElementById("searchInput");
+      const tagBar = document.getElementById("tagBar");
+
+      let activeTag = "Все";
+
+      function getSavedProgress(subjectId) {
+        try {
+          const raw = localStorage.getItem("quiz_progress_" + subjectId);
+          if (!raw) return null;
+          const data = JSON.parse(raw);
+          const answered = Object.keys(data.answers || {}).length;
+          if (!answered) return null;
+          const correct = Object.values(data.answers).filter((a) => a.isCorrect).length;
+          return `Решено: ${answered} (верно: ${correct})`;
+        } catch {
+          return null;
+        }
+      }
+
+      function renderTags() {
+        const tags = ["Все", ...new Set(subjects.map((s) => s.tag))];
+        tagBar.innerHTML = "";
+        tags.forEach((tag) => {
+          const btn = document.createElement("button");
+          btn.className = "tag-btn" + (tag === activeTag ? " active" : "");
+          btn.textContent = tag;
+          btn.onclick = () => {
+            activeTag = tag;
+            renderTags();
+            renderGrid();
+          };
+          tagBar.appendChild(btn);
+        });
+      }
+
+      function renderGrid() {
+        const q = searchInput.value.trim().toLowerCase();
+        const filtered = subjects.filter((s) => {
+          const matchesTag = activeTag === "Все" || s.tag === activeTag;
+          const matchesText =
+            s.title.toLowerCase().includes(q) ||
+            s.subtitle.toLowerCase().includes(q) ||
+            s.tag.toLowerCase().includes(q);
+          return matchesTag && matchesText;
+        });
+
+        grid.innerHTML = "";
+        if (!filtered.length) {
+          grid.innerHTML = '<div class="empty-state">Ничего не найдено по вашему запросу.</div>';
+          return;
+        }
+
+        filtered.forEach((s) => {
+          const card = document.createElement("a");
+          card.href = s.folder;
+          card.className = "subject-card";
+          card.style.setProperty("--card-accent", s.accent || "#2563eb");
+
+          const progress = getSavedProgress(s.id);
+          card.innerHTML = `
+            <div class="card-top">
+              <span class="card-tag">${s.tag}</span>
+              <span class="card-topics">Тем: ${s.topicsCount}</span>
+            </div>
+            <h2>${s.title}</h2>
+            <p>${s.subtitle}</p>
+            <div class="card-footer">
+              <span>Открыть квиз →</span>
+              <span class="progress-pill">${progress || "Не начато"}</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      searchInput.addEventListener("input", renderGrid);
+      renderTags();
+      renderGrid();
+    })();
+  </script>
+</body>
+</html>
