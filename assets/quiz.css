@@ -6,17 +6,17 @@
   --muted: #64748b;
 
   /* Visual distinction: Theory vs Practice */
-  --theory-main: #2563eb;
+  --theory-main: #0969DA;
   --theory-soft: #eff6ff;
   --theory-border: #bfdbfe;
 
-  --practice-main: #d97706;
+  --practice-main: #BC4C00;
   --practice-soft: #fffbeb;
   --practice-border: #fde68a;
 
-  --ok: #16a34a;
+  --ok: #1A7F37;
   --ok-soft: #f0fdf4;
-  --err: #dc2626;
+  --err: #D1242F;
   --err-soft: #fef2f2;
   --radius: 12px;
 }
