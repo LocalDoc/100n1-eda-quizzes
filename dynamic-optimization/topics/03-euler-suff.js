@@ -1,0 +1,30 @@
+window.registerTopic({
+  id: "euler-suff",
+  title: "Уравнение Эйлера + достаточные условия.", 
+  questions: [
+    {
+      type: "theory",
+      question: String.raw``,
+      options: [
+        String.raw``,
+        String.raw``,
+        String.raw``,
+        String.raw``
+      ],
+      correct: 1,
+      explanation: String.raw``
+    },
+    {
+      type: "practice",
+      question: String.raw``,
+      options: [
+        String.raw``,
+        String.raw``,
+        String.raw``,
+        String.raw``
+      ],
+      correct: 2,
+      explanation: String.raw``
+    }
+  ]
+});
