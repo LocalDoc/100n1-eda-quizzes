@@ -82,7 +82,7 @@
             </div>
           </div>
           <div class="top-actions">
-            <span class="timer-badge" id="timerBadge">⏱ 15:00</span>
+            <span class="timer-badge" id="timerBadge">15:00</span>
             <button class="btn btn-timer" id="timedBtn">Мини-квиз (15 мин)</button>
             <button class="btn" id="statsBtn">Аналитика</button>
             <button class="btn btn-danger" id="resetBtn">Сброс</button>
@@ -122,8 +122,8 @@
           </div>
 
           <div class="card-nav">
-            <button class="btn" id="prevBtn">← Назад</button>
-            <span class="kbd-hint">Клавиши: 1–4 для ответа · ← / → навигация</span>
+            <button class="btn" id="prevBtn"> Назад</button>
+            <span class="kbd-hint">Клавиши: 1 – 4 для ответа · ← / → навигация</span>
             <button class="btn btn-primary" id="nextBtn">Далее →</button>
           </div>
         </section>
@@ -281,7 +281,7 @@
 
       elCard.className = `card type-${q.type}`;
       elTypeBadge.className = `badge badge-${q.type}`;
-      elTypeBadge.textContent = q.type === "practice" ? "Практика · Расчёт" : "Теория";
+      elTypeBadge.textContent = q.type === "practice" ? "Практика" : "Теория";
       elTopicBadge.textContent = q.topicTitle;
       elCounter.textContent = `Вопрос ${currentIndex + 1} из ${list.length}`;
 

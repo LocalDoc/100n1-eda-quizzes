@@ -4,7 +4,7 @@
   --border: #e2e8f0;
   --text: #0f172a;
   --muted: #64748b;
-  --primary: #2563eb;
+  --primary: #0969DA;
   --radius: 14px;
 }
 
@@ -19,9 +19,10 @@ body {
 }
 
 .hub-header {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, #3e4764 0%, #3e4764 100%);
   color: #fff;
-  padding: 3rem 1.5rem 2.5rem;
+  padding: 2.5rem 1.5rem 0;
+  overflow: hidden;
 }
 
 .hub-container {
@@ -32,6 +33,59 @@ body {
 
 .hub-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
 .hub-header p { color: #cbd5e1; max-width: 620px; font-size: 1rem; }
+
+.hub-header {
+  /* Keep your current background & text color; set bottom padding to 0 */
+  padding: 2.5rem 1.5rem 0;
+  overflow: hidden;
+}
+
+.hub-header .hub-container {
+  display: flex;
+  align-items: stretch;      /* Both columns stretch to the bottom edge of the header */
+  justify-content: space-between;
+  gap: 2.5rem;
+}
+
+.hub-title-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* Use "center" if you want the image centered under the title */
+  flex: 0 1 420px;
+}
+
+.hub-title-col h1 {
+  margin-bottom: 0.75rem;
+}
+
+.hub-header-img {
+  display: block;            /* Eliminates the ~5px baseline gap browsers add under inline images */
+  height: 115px;             /* Scales 612x571 proportionally; adjust height to taste */
+  width: auto;
+  margin-top: auto;          /* Pushes the image to the bottom edge even if the right text is taller */
+}
+
+.hub-description {
+  flex: 1;
+  max-width: 560px;
+  padding-top: 0.4rem;
+  padding-bottom: 2.5rem;    /* Preserves breathing room below the description text */
+}
+
+@media (max-width: 700px) {
+  .hub-header .hub-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hub-title-col {
+    flex: auto;
+  }
+
+  .hub-description {
+    padding-top: 0;
+  }
+}
 
 .controls {
   display: flex;
