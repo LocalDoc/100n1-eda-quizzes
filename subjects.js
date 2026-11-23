@@ -16,5 +16,14 @@ window.SUBJECTS = [
     tag: "ФЭН",
     topicsCount: 5,
     accent: "#dc8215"
+  }, 
+  {
+    id: "caos",
+    title: "АКОС",
+    subtitle: "Теория и практика по темам курса ФКН 'Архитектура компьютера и операционные системы'.",
+    folder: "./caos/index.html",
+    tag: "ФКН",
+    topicsCount: 3,
+    accent: "#8acf09"
   }
 ];

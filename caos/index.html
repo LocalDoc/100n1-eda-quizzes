@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Загрузка квиза...</title>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../assets/quiz.css" />
+
+  <!-- KaTeX for math formulas ($ ... $ and $$ ... $$) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <!-- 1. Load the shared quiz engine -->
+  <script src="../assets/quiz-engine.js"></script>
+
+  <!-- 2. Load topic files (ADD NEW TOPICS HERE — 1 line per topic) -->
+  <script src="./topics/01-intro-architecture-os-c.js"></script>
+  <script src="./topics/02-types-structs-pointers.js"></script>
+  <script src="./topics/03-c-allocation-linkage-allocator.js"></script>
+
+  <!-- 3. Configure this subject -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.initQuizApp({
+        id: "caos",       // Unique slug (used to save progress in localStorage)
+        title: "CAOS",
+        subtitle: "АКОС (ФКН), теория и практика по темам курса.",
+        timedCount: 10,               // Questions in Timed Mini-Quiz
+        timedMinutes: 15              // Duration in minutes
+      });
+    });
+  </script>
+</body>
+</html>
