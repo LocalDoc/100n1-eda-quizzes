@@ -172,18 +172,6 @@ window.registerTopic({
     },
     {
       type: "practice",
-      question: String.raw`Используя формулу $\delta V = \left.\frac{d}{d\alpha} V[y + \alpha\delta y]\right|_{\alpha=0}$, найдите вариацию функционала $V[y] = \int_0^T (y'(t))^2\,dt$.`,
-      options: [
-        String.raw`$\delta V = \int_0^T 2y'(t)\delta y(t)\,dt$`,
-        String.raw`$\delta V = \int_0^T \left(2y'(t)\delta y'(t) + (\delta y'(t))^2\right) dt$`,
-        String.raw`$\delta V = \int_0^T 2y''(t)\delta y'(t)\,dt$`,
-        String.raw`$\delta V = \int_0^T 2y'(t)\delta y'(t)\,dt$`
-      ],
-      correct: 3,
-      explanation: String.raw`Подставим $y + \alpha\delta y$ и учтём, что $(y + \alpha\delta y)' = y' + \alpha\delta y'$: $V[y + \alpha\delta y] = \int_0^T (y' + \alpha\delta y')^2\,dt$. Дифференцируем подынтегральное выражение по параметру $\alpha$: $\frac{d}{d\alpha}(y' + \alpha\delta y')^2 = 2(y' + \alpha\delta y')\delta y'$. Подставляя $\alpha = 0$, получаем $\delta V = \int_0^T 2y'(t)\delta y'(t)\,dt$.`
-    },
-    {
-      type: "practice",
       question: String.raw`Найдите вариацию $\delta V$ функционала $V[y] = \int_0^T \left(y^2(t) - (y'(t))^2\right) dt$.`,
       options: [
         String.raw`$\delta V = \int_0^T \left(2y\delta y + 2y'\delta y'\right) dt$`,
@@ -207,16 +195,185 @@ window.registerTopic({
       explanation: String.raw`Заменяем $y(t)$ на $y(t) + \alpha\delta y(t)$ везде, включая значение в точке $t = 0$: $V[y + \alpha\delta y] = (y(0) + \alpha\delta y(0))^2 + \int_0^1 \left(t(y + \alpha\delta y) + (y' + \alpha\delta y')^2\right) dt$. Дифференцируя по $\alpha$ при $\alpha = 0$, получаем $\delta V = 2y(0)\delta y(0) + \int_0^1 (t\delta y + 2y'\delta y')\,dt$.`
     },
     {
-      type: "practice",
-      question: String.raw`Найдите вариацию $\delta V$ функционала $V[y] = \int_0^T \left(t y^3(t) + y(t)y'(t)\right) dt$ с помощью метода дифференцирования по параметру $\alpha$.`,
+      type: "theory",
+      question: String.raw`В задаче 1 контрольной работы требуется найти первую вариацию функционала $V[y] = \int_a^b F(t, y, y')\,dt$, при этом граничные значения $y(a)$ и $y(b)$ не заданы. Нужно ли интегрировать слагаемое с $\delta y'$ по частям, чтобы избавиться от производной вариации?`,
       options: [
-        String.raw`$\delta V = \int_0^T \left((3t y^2 + y')\delta y + y\delta y'\right) dt$`,
-        String.raw`$\delta V = \int_0^T \left(3t y^2\delta y + y'\delta y'\right) dt$`,
-        String.raw`$\delta V = \int_0^T \left(3t y^2\delta y + y\delta y'\right) dt$`,
-        String.raw`$\delta V = \int_0^T \left(3y^2\delta y + y'\delta y + y\delta y'\right) dt$`
+        String.raw`Да, всегда необходимо проинтегрировать по частям и обнулить внеинтегральную подстановку, так как $\delta y(a) = \delta y(b) = 0$.`,
+        String.raw`Да, иначе полученное выражение не будет линейным функционалом от $\delta y$.`,
+        String.raw`Нет, в задаче на нахождение первой вариации без закреплённых концов ответ оставляют с $\delta y$ и $\delta y'$ под интегралом; кроме того, при свободных концах $\delta y(a)$ и $\delta y(b)$ не обязаны равняться нулю.`,
+        String.raw`Нет, потому что производная $\delta y'$ всегда тождественно равна нулю.`
+      ],
+      correct: 2,
+      explanation: String.raw`Первая вариация $\delta V = \int_a^b (F_y \delta y + F_{y'}\delta y')\,dt$ уже является линейным функционалом по $\delta y$ (операция дифференцирования линейна). Интегрирование по частям применяется позже — при выводе уравнения Эйлера и условий трансверсальности. Поскольку в задаче 1 концы траектории не закреплены, $\delta y(a)$ и $\delta y(b)$ произвольны, а итоговый ответ записывается прямо с $\delta y$ и $\delta y'$.`
+    },
+    {
+      type: "theory",
+      question: String.raw`В функционале $V[y] = G(y(t^*)) + \int_{a_1}^{a_2} F(t, y(t), y'(t))\,dt$ пределы интегрирования и точка $t^*$ заданы символически через параметр (например, $t^* = \tau$ на $[\tau, 2\tau]$, либо внутренняя точка $t^* = 3\sqrt{a/2}$ на $[0, 8\sqrt{a}]$, либо пределы $[a, 1-a]$). Как эти параметры влияют на вычисление $\delta V = \left.\frac{\partial}{\partial \alpha} V[y + \alpha\delta y]\right|_{\alpha=0}$?`,
+      options: [
+        String.raw`Нужно дополнительно продифференцировать интеграл по верхнему и нижнему пределам по формуле Лейбница.`,
+        String.raw`Параметры не зависят от $\alpha$ и $y$, поэтому пределы $[a_1, a_2]$ и точка $t^*$ (неважно, граничная она или внутренняя) остаются без изменений, а варьируется только сама функция: $G(y(t^*)) \mapsto G'(y(t^*))\delta y(t^*)$.`,
+        String.raw`Внеинтегральное слагаемое $G(y(t^*))$ исчезает при дифференцировании по $\alpha$, если $t^*$ лежит строго внутри отрезка $[a_1, a_2]$.`,
+        String.raw`Перед интегралом появляется множитель $(a_2 - a_1)$, а знак интеграла меняется, если $a_2 < a_1$.`
+      ],
+      correct: 1,
+      explanation: String.raw`Дифференцирование выполняется исключительно по параметру возмущения $\alpha$, от которого ни пределы интегрирования $[a_1, a_2]$, ни фиксированная точка оценки $t^*$ не зависят — независимо от того, совпадает ли $t^*$ с концом отрезка или лежит внутри него. Поэтому $\left.\frac{\partial}{\partial \alpha}\right|_{\alpha=0}$ вносится под знак интеграла с теми же пределами, а внеинтегральное слагаемое даёт $G'(y(t^*))\delta y(t^*)$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию функционала с линейными слагаемыми, зависящими от $t$ коэффициентами и «свободным» слагаемым от $t$:
+$$V[y] = \int_0^T \left(e^{3t} y(t) - t^2 y'(t) + \ln(1 + t^2)\right) dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_0^T \left(e^{3t}\delta y - t^2\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_0^T \left(e^{3t}\delta y - t^2\delta y' + \frac{2t}{1+t^2}\right) dt$`,
+        String.raw`$\delta V = \int_0^T \left(3e^{3t}\delta y - 2t\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_0^T \left(e^{3t}\delta y - t^2\delta y' + \ln(1+t^2)\right) dt$`
       ],
       correct: 0,
-      explanation: String.raw`Рассмотрим $V[y + \alpha\delta y] = \int_0^T \left[t(y + \alpha\delta y)^3 + (y + \alpha\delta y)(y' + \alpha\delta y')\right] dt$. Производная по $\alpha$ первого слагаемого при $\alpha = 0$ равна $3t y^2\delta y$. Для произведения по правилу дифференцирования: $\left.\frac{d}{d\alpha}(y + \alpha\delta y)(y' + \alpha\delta y')\right|_{\alpha=0} = \delta y \cdot y' + y \cdot \delta y'$. Объединяя слагаемые при $\delta y$, получаем $\delta V = \int_0^T \left((3t y^2 + y')\delta y + y\delta y'\right) dt$.`
+      explanation: String.raw`Подставляем $y + \alpha\delta y$ и $y' + \alpha\delta y'$ и дифференцируем по $\alpha$ при $\alpha = 0$. Функции $e^{3t}$ и $-t^2$ выступают константами по $\alpha$, поэтому дают $e^{3t}\delta y - t^2\delta y'$ (точно так же отдельное слагаемое $\pm y'$ без коэффициента давало бы $\pm \delta y'$). Слагаемое $\ln(1 + t^2)$ вообще не зависит от $\alpha$ и от $y$, поэтому его производная по $\alpha$ равна $0$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию чисто внеинтегрального функционала, заданного в символических точках:
+$$V[y] = 3y^2(\tau) - 5y(2\tau).$$`,
+      options: [
+        String.raw`$\delta V = 6y(\tau) - 5$`,
+        String.raw`$\delta V = 6y(\tau)\delta y(\tau) - 10\delta y(2\tau)$`,
+        String.raw`$\delta V = 6\tau y(\tau)\delta y(\tau) - 5\delta y(2\tau)$`,
+        String.raw`$\delta V = 6y(\tau)\delta y(\tau) - 5\delta y(2\tau)$`
+      ],
+      correct: 3,
+      explanation: String.raw`Заменяем $y(\cdot)$ на $y(\cdot) + \alpha\delta y(\cdot)$ в каждой точке оценки: $V[y+\alpha\delta y] = 3(y(\tau) + \alpha\delta y(\tau))^2 - 5(y(2\tau) + \alpha\delta y(2\tau))$. Дифференцируя по $\alpha$ при $\alpha = 0$, получаем $6y(\tau)\delta y(\tau) - 5\delta y(2\tau)$. Коэффициент $2$ внутри аргумента $2\tau$ не выносится наружу, так как дифференцирование идёт по $\alpha$, а не по $\tau$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию внеинтегрального функционала со сложными элементарными функциями:
+$$V[y] = \cos(2y(a)) + e^{y(a)}.$$`,
+      options: [
+        String.raw`$\delta V = \left(e^{y(a)} - \sin(2y(a))\right)\delta y(a)$`,
+        String.raw`$\delta V = \left(e^{y(a)} + 2\sin(2y(a))\right)\delta y(a)$`,
+        String.raw`$\delta V = \left(e^{y(a)} - 2\sin(2y(a))\right)\delta y(a)$`,
+        String.raw`$\delta V = \left(e^{y(a)} - 2\sin(2y(a))\right)y'(a)\delta y(a)$`
+      ],
+      correct: 2,
+      explanation: String.raw`Применяем правило дифференцирования сложной функции по $\alpha$ при $\alpha = 0$: $\frac{\partial}{\partial \alpha}\cos(2(y(a) + \alpha\delta y(a)))\big|_{\alpha=0} = -\sin(2y(a)) \cdot 2\delta y(a)$, а $\frac{\partial}{\partial \alpha} e^{y(a) + \alpha\delta y(a)}\big|_{\alpha=0} = e^{y(a)}\delta y(a)$. Складывая и вынося $\delta y(a)$, получаем $\left(e^{y(a)} - 2\sin(2y(a))\right)\delta y(a)$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию степенного функционала:
+$$V[y] = \int_a^{a+1} \left(4y^3(t) - 2(y'(t))^5\right) dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_a^{a+1} \left(12y^2\delta y - 10(y')^4\delta y\right) dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(12y^2\delta y - 10(y')^4\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(12y^2 y'\delta y - 10(y')^4 y''\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(4y^2\delta y - 2(y')^4\delta y'\right) dt$`
+      ],
+      correct: 1,
+      explanation: String.raw`Для каждого степенного слагаемого дифференцируем по $\alpha$ при $\alpha = 0$: $\frac{\partial}{\partial \alpha} 4(y + \alpha\delta y)^3\big|_{\alpha=0} = 12y^2\delta y$ и $\frac{\partial}{\partial \alpha}(-2(y' + \alpha\delta y')^5)\big|_{\alpha=0} = -10(y')^4\delta y'$. Важно не путать $\delta y$ и $\delta y'$ во втором слагаемом.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Используя правило дифференцирования произведения по $\alpha$, найдите первую вариацию функционала:
+$$V[y] = \int_0^1 y^3(t)(y'(t))^4\,dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_0^1 \left(3y^2(y')^4\delta y + 4y^3(y')^3\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_0^1 12y^2(y')^3\delta y\,\delta y'\,dt$`,
+        String.raw`$\delta V = \int_0^1 \left(3y^2(y')^4 + 4y^3(y')^3\right)\delta y\,dt$`,
+        String.raw`$\delta V = \int_0^1 \left(4y^2(y')^4\delta y + 3y^3(y')^3\delta y'\right) dt$`
+      ],
+      correct: 0,
+      explanation: String.raw`Дифференцируем произведение $(y + \alpha\delta y)^3 \cdot (y' + \alpha\delta y')^4$ по $\alpha$ как $(uv)'_\alpha = u'_\alpha v + u v'_\alpha$: получаем $3(y + \alpha\delta y)^2\delta y \cdot (y' + \alpha\delta y')^4 + (y + \alpha\delta y)^3 \cdot 4(y' + \alpha\delta y')^3\delta y'$. При $\alpha = 0$ это даёт $3y^2(y')^4\delta y + 4y^3(y')^3\delta y'$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию функционала с общим временны́м множителем перед скобкой:
+$$V[y] = \int_0^2 e^{-3t}\left(2y + 4yy' - (y')^2\right) dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_0^2 e^{-3t}\left(2\delta y + 4\delta y\delta y' - 2y'\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_0^2 \left(-3e^{-3t}(2y + 4yy' - (y')^2) + e^{-3t}((2 + 4y')\delta y + (4y - 2y')\delta y')\right) dt$`,
+        String.raw`$\delta V = \int_0^2 e^{-3t}\left((2 + 4y)\delta y + (4y' - 2y')\delta y'\right) dt$`,
+        String.raw`$\delta V = \int_0^2 e^{-3t}\left((2 + 4y')\delta y + (4y - 2y')\delta y'\right) dt$`
+      ],
+      correct: 3,
+      explanation: String.raw`Множитель $e^{-3t}$ не зависит от $\alpha$, поэтому просто выносится за знак $\frac{\partial}{\partial \alpha}$. Внутри скобки варьируем каждое слагаемое: $2y \mapsto 2\delta y$, $4yy' \mapsto 4y'\delta y + 4y\delta y'$, $-(y')^2 \mapsto -2y'\delta y'$. Группируя коэффициенты при $\delta y$ и $\delta y'$, получаем $e^{-3t}\left((2 + 4y')\delta y + (4y - 2y')\delta y'\right)$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию функционала с двойной композицией тригонометрических функций:
+$$V[y] = \int_a^{a+1} \cos(\sin(y(t)))\,dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_a^{a+1} \sin(\sin(y))\cos(y)\delta y\,dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(-\sin(\sin(y))\cos(y)\right)\delta y\,dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(-\sin(\cos(y))\right)\delta y\,dt$`,
+        String.raw`$\delta V = \int_a^{a+1} \left(-\sin(\sin(y))\cos(y)\right)y'\delta y\,dt$`
+      ],
+      correct: 1,
+      explanation: String.raw`Применяем правило цепочки к $\cos(\sin(y + \alpha\delta y))$ по переменной $\alpha$: производная внешней функции $\cos(u)$ равна $-\sin(u)$, производная средней $\sin(v)$ равна $\cos(v)$, производная аргумента $y + \alpha\delta y$ по $\alpha$ равна $\delta y$. Подставляя $\alpha = 0$, получаем $-\sin(\sin(y))\cos(y)\delta y$. Множитель $y'$ здесь не возникает, так как мы дифференцируем по $\alpha$, а не по $t$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Найдите первую вариацию функционала со степенным аргументом внутри тригонометрической функции:
+$$V[y] = \int_0^T \sin(y^2(t))\,dt.$$`,
+      options: [
+        String.raw`$\delta V = \int_0^T \cos(y^2)\delta y\,dt$`,
+        String.raw`$\delta V = \int_0^T 2y\cos(2y)\delta y\,dt$`,
+        String.raw`$\delta V = \int_0^T 2y\cos(y^2)\delta y\,dt$`,
+        String.raw`$\delta V = \int_0^T \left(-2y\cos(y^2)\right)\delta y\,dt$`
+      ],
+      correct: 2,
+      explanation: String.raw`Дифференцируем $\sin((y + \alpha\delta y)^2)$ по $\alpha$: $\cos((y + \alpha\delta y)^2) \cdot 2(y + \alpha\delta y)\delta y$. При $\alpha = 0$ остаётся $2y\cos(y^2)\delta y$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`При нахождении вариации функционала $V[y] = \int_0^1 y(t)(y'(t))^2\,dt$ напрямую через приращение $\Delta V = V[y + \delta y] - V[y]$ под интегралом раскрыли скобки:
+$$(y + \delta y)(y' + \delta y')^2 - y(y')^2 = (y')^2\delta y + 2yy'\delta y' + y(\delta y')^2 + 2y'\delta y\,\delta y' + \delta y(\delta y')^2.$$
+Какие именно слагаемые образуют главную линейную часть (вариацию $\delta V$), а какие относятся к остаточному члену высшего порядка малости?`,
+      options: [
+        String.raw`В $\delta V$ входят $(y')^2\delta y + 2yy'\delta y'$; остальные три слагаемых $y(\delta y')^2 + 2y'\delta y\,\delta y' + \delta y(\delta y')^2$ имеют 2-й и 3-й порядок малости по $(\delta y, \delta y')$ и уходят в остаток.`,
+        String.raw`В $\delta V$ входят $(y')^2\delta y + 2yy'\delta y' + 2y'\delta y\,\delta y'$, так как $\delta y$ и $\delta y'$ входят в произведение в первых степенях.`,
+        String.raw`В $\delta V$ входит только $(y')^2\delta y$, а все слагаемые с $\delta y'$ уходят в остаток.`,
+        String.raw`В $\delta V$ входят все пять слагаемых, так как они линейны по $y$.`
+      ],
+      correct: 0,
+      explanation: String.raw`Вариация должна быть линейна по совокупности приращений $(\delta y, \delta y')$ — то есть при умножении $\delta y$ и $\delta y'$ на константу $c$ каждое слагаемое $\delta V$ умножается ровно на $c^1$. Произведение $\delta y \cdot \delta y'$ и квадрат $(\delta y')^2$ умножаются на $c^2$ (второй порядок малости), а $\delta y(\delta y')^2$ — на $c^3$ (третий порядок), поэтому они отбрасываются в остаток.`
+    },
+    {
+      type: "theory",
+      question: String.raw`В экзаменационной задаче просят найти вариацию функционала $V[y] = \int_0^T \cos(y^2(t))\,dt$ двумя способами (через $\alpha$ и по определению через $\Delta V$) и показать, что результаты совпадают. Какой инструмент нужен для выделения главной линейной части из $\cos((y + \delta y)^2) - \cos(y^2)$ в способе через $\Delta V$?`,
+      options: [
+        String.raw`Интегрирование по частям выражения $\cos((y + \delta y)^2)$.`,
+        String.raw`Приравнивание уравнения Эйлера к нулю для $F = \cos(y^2)$.`,
+        String.raw`Замена $\cos((y + \delta y)^2)$ на $\cos(y^2) + \cos((\delta y)^2)$, так как косинус аддитивен.`,
+        String.raw`Разложение функции $f(u) = \cos(u)$ по формуле Тейлора 1-го порядка в точке $u = y^2$ с приращением $\Delta u = 2y\delta y + (\delta y)^2$ (или формула косинуса суммы с последующей заменой $\sin(\Delta u) = \Delta u + o(\Delta u)$ и $\cos(\Delta u) = 1 + o(\Delta u)$).`
+      ],
+      correct: 3,
+      explanation: String.raw`Обозначим $\Delta u = (y + \delta y)^2 - y^2 = 2y\delta y + (\delta y)^2$. По формуле Тейлора 1-го порядка $\cos(y^2 + \Delta u) - \cos(y^2) = -\sin(y^2)\Delta u + o(\Delta u) = -\sin(y^2)(2y\delta y + (\delta y)^2) + o(\delta y) = -2y\sin(y^2)\delta y + o(\delta y)$. Главная линейная часть $-2y\sin(y^2)\delta y$ точно совпадает с результатом $\alpha$-метода.`
+    },
+    {
+      type: "practice",
+      question: String.raw`При решении задачи через приращение $\Delta V$ для слагаемого $\int_0^{10} \sin(y(t))\,dt$ применили тригонометрическую формулу суммы и получили:
+$$\sin(y + \delta y) - \sin y = \sin y \cdot (\cos(\delta y) - 1) + \cos y \cdot \sin(\delta y).$$
+Какую асимптотику при $\delta y \to 0$ имеет каждое из двух слагаемых, и что остаётся в первой вариации?`,
+      options: [
+        String.raw`$\cos(\delta y) - 1 = -\delta y + o(\delta y)$ и $\sin(\delta y) = \delta y + o(\delta y)$, поэтому в $\delta V$ остаётся $(\cos y - \sin y)\delta y$.`,
+        String.raw`$\cos(\delta y) - 1 = -\frac{(\delta y)^2}{2} + o((\delta y)^2) = o(\delta y)$ уходит в остаток, а $\sin(\delta y) = \delta y + o(\delta y)$, поэтому в $\delta V$ остаётся $\int_0^{10} \cos(y(t))\delta y(t)\,dt$.`,
+        String.raw`Оба слагаемых имеют порядок $o(\delta y)$, поэтому вариация равна нулю.`,
+        String.raw`$\cos(\delta y) - 1 = 1 + o(\delta y)$ и $\sin(\delta y) = \delta y + o(\delta y)$, поэтому в $\delta V$ остаётся $\int_0^{10} (\sin y + \cos y\,\delta y)\,dt$.`
+      ],
+      correct: 1,
+      explanation: String.raw`Из стандартных разложений Маклорена при $\delta y \to 0$ имеем $\cos(\delta y) - 1 = -\frac{1}{2}(\delta y)^2 + o((\delta y)^2) = o(\delta y)$ (бесконечно малая 2-го порядка) и $\sin(\delta y) = \delta y + o(\delta y)$. Следовательно, $\sin(y + \delta y) - \sin y = \cos y\,\delta y + o(\delta y)$, и главная линейная часть равна $\int_0^{10} \cos(y(t))\delta y(t)\,dt$.`
+    },
+    {
+      type: "practice",
+      question: String.raw`Контрольная мини-сборка (все типовые элементы задачи 1 вместе). Найдите первую вариацию функционала:
+$$V[y] = e^{y(\tau)} + \int_{\tau}^{3\tau} \left(t^2 y(t)(y'(t))^2 - \cos(y(t)) + \sin(5t)\right) dt.$$`,
+      options: [
+        String.raw`$\delta V = e^{y(\tau)}\delta y(\tau) + \int_{\tau}^{3\tau} \left[\left(t^2(y')^2 - \sin y\right)\delta y + 2t^2 yy'\delta y'\right] dt$`,
+        String.raw`$\delta V = e^{y(\tau)}\delta y(\tau) + \int_{\tau}^{3\tau} \left[\left(t^2(y')^2 + \sin y\right)\delta y + 2t^2 yy'\delta y' + 5\cos(5t)\right] dt$`,
+        String.raw`$\delta V = e^{y(\tau)}\delta y(\tau) + \int_{\tau}^{3\tau} \left[\left(t^2(y')^2 + \sin y\right)\delta y + 2t^2 yy'\delta y'\right] dt$`,
+        String.raw`$\delta V = e^{y(\tau)} + \int_{\tau}^{3\tau} \left[\left(t^2(y')^2 + \sin y\right)\delta y + 2t^2 yy'\delta y'\right] dt$`
+      ],
+      correct: 2,
+      explanation: String.raw`Разбираем по частям методом с $\alpha$: (1) внеинтегральное слагаемое $e^{y(\tau)}$ даёт $e^{y(\tau)}\delta y(\tau)$; (2) пределы $[\tau, 3\tau]$ не меняются; (3) произведение $t^2 y(y')^2$ даёт $t^2\left((y')^2\delta y + 2yy'\delta y'\right)$; (4) слагаемое $-\cos y$ даёт $-(-\sin y)\delta y = +\sin y\,\delta y$; (5) слагаемое $\sin(5t)$ не зависит от $y$ и обнуляется. Суммируя, получаем вариант 3.`
     },
     {
       type: "theory",
